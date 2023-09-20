@@ -1,43 +1,71 @@
-/* eslint-disable-next-line */
-function headerFactory(data) {
-    // catch data
-    const { name, portrait, city, country, tagline, price } = data
-    // structure data for use in html
-    const picture = `./assets/photographers/${portrait}`
-    const location = `${city}, ${country}`
-    function getheaderCardDOM () {
-      // description
-      const article = document.createElement('article')
-      article.setAttribute('class', 'description')
-      // title
-      const h2 = document.createElement('h2')
-      h2.textContent = name
-      // city
-      const divLocation = document.createElement('div')
-      divLocation.setAttribute('class', 'location')
-      divLocation.textContent = location
-      // tagline
-      const divTagline = document.createElement('div')
-      divTagline.setAttribute('class', 'tagline')
-      divTagline.textContent = tagline
-      // button
-      const btn = document.createElement('button')
-      btn.setAttribute('class', 'contact_button')
-      btn.setAttribute('onclick', 'displayModal()')
-      btn.textContent = 'Contactez moi'
-      // image
-      const img = document.createElement('img')
-      img.setAttribute('src', picture)
-      img.setAttribute('alt', name)
-  
-      // article structure
-      document.querySelector('.photograph-header').appendChild(article)
-      article.appendChild(h2)
-      article.appendChild(divLocation)
-      article.appendChild(divTagline)
-      document.querySelector('.photograph-header').appendChild(btn)
-      document.querySelector('.photograph-header').appendChild(img)
-      return article
-    }
-    return { name, picture, location, tagline, price, getheaderCardDOM }
+function photographerWorkFactory(data) {
+    
+  const { title, image, video, likes, date, altText } = data;
+  const picture = `assets/images/${image}`;
+  const videoMedia = `assets/images/${video}`;
+
+  function getMediaDOM() {
+      var media = undefined;
+
+      if( image != undefined ) {
+          media = document.createElement( 'img' );
+          media.src = picture;
+          media.alt = title;
+          media.setAttribute("loading", "lazy");
+      } else if( video != undefined ) {
+          media = document.createElement( 'video' );
+          media.src = videoMedia;
+          media.title = title;
+          media.setAttribute("preload", "metadata");
+      }
+
+      media.setAttribute("onclick", "lightbox(event)");
+      media.setAttribute("onkeydown", "handleKeyDown(event)?lightbox(event):undefined");
+      media.setAttribute("aria-haspopup", "dialog");
+      media.setAttribute("aria-label", altText);
+      media.setAttribute("tabindex", 0);
+      media.dataset.date = date;
+      media.className = 'thumb-img';
+
+      return media
   }
+
+  function getUserWorkDOM() {
+      const figure = document.createElement( 'figure' );
+      figure.className = 'thumb-imgfull';
+      
+      var media = getMediaDOM();
+
+      const figcaption = document.createElement( 'figcaption' );
+
+      const text = document.createElement( 'h2' );
+      text.textContent = title;
+
+      const divLikes = document.createElement( 'div' );
+      divLikes.setAttribute("onclick", 'like(event)');
+      divLikes.setAttribute("role", "button");
+      divLikes.className = 'likes';
+      divLikes.ariaLabel = 'likes';
+
+      const numberLikes = document.createElement( 'span' );
+      numberLikes.className = 'number-likes';
+      numberLikes.textContent = likes;
+      
+      const imgLikes = document.createElement( 'img' );
+      imgLikes.src = 'assets/icons/heart.svg';
+      imgLikes.alt = 'likes';
+
+      divLikes.appendChild(numberLikes);
+      divLikes.appendChild(imgLikes);
+
+      figcaption.appendChild(text);
+      figcaption.appendChild(divLikes);
+
+      figure.appendChild(media);
+      figure.appendChild(figcaption);
+
+      return figure;
+  }
+
+  return { getUserWorkDOM }
+}

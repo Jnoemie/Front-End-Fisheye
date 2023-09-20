@@ -1,57 +1,71 @@
-function photographerTemplate(data) {
-    const { id, name, portrait, city, country, tagline, price } = data;
-  
-    const picture = `assets/photographers/${portrait}`;
-  
-    function getUserCardDOM() {
-      const article = document.createElement("article");
-      article.setAttribute("role", "region");
-      article.setAttribute('tabindex', '-1');
-  
-      const linkPhotographer = document.createElement("a");
-      linkPhotographer.setAttribute("href", `./photographer.html?id=${id}`);
-      linkPhotographer.setAttribute("aria-label", name);
-      linkPhotographer.setAttribute("role", "link");
-      linkPhotographer.setAttribute("title", `Visiter la page de profil ${name} ?`)
-  
-      const imgPhotographer = document.createElement("img");
-      imgPhotographer.setAttribute("src", picture);
-     
-     
-      const namePhotographer = document.createElement("h2");
-      namePhotographer.textContent = name;
-  
-      const infosPhotographer = document.createElement('div');
-      infosPhotographer.setAttribute('tabindex', '0');
-  
-      const locationPhotographer = document.createElement("div");
-      locationPhotographer.textContent = `${city},${country}`;
-      locationPhotographer.setAttribute("aria-label", "Ville et pays du photographe");
-  
-  
-      const taglinePhotographer = document.createElement("div");
-      taglinePhotographer.textContent = tagline;
-      taglinePhotographer.setAttribute("aria-label", "Tag line");
-  
-      const pricePhotographer = document.createElement("div");
-      pricePhotographer.textContent = `${price}€/jour`;
-      pricePhotographer.setAttribute("aria-label", "Prix par jour");
-  
-  
-  
-      article.appendChild(linkPhotographer);
-      linkPhotographer.appendChild(imgPhotographer);
-      linkPhotographer.appendChild(namePhotographer);
-      article.appendChild(infosPhotographer);
-      infosPhotographer.appendChild(locationPhotographer);
-      infosPhotographer.appendChild(taglinePhotographer);
-      infosPhotographer.appendChild(pricePhotographer);
-      return article;
-    }
-    
-  
-    return { name, picture, price, getUserCardDOM};
+function photographerFactory(data) {
+
+  const { name, id, city, country, tagline, price, portrait } = data;
+  const picture = `assets/photographers/${portrait}`;
+
+  function getUserCardDOM() {
+      const article = document.createElement( 'article' );
+      article.className = 'thumb-photographer';
+
+      const linkUser = document.createElement( 'a' );
+      linkUser.href = `photographer.html?photographer=${id}`;
+      linkUser.ariaLabel = name;
+      linkUser.setAttribute("onkeydown","openlink(event)");
+      
+      const img = getUserPictureDOM();
+
+      const h2 = document.createElement( 'h2' );
+      h2.textContent = name;
+
+      const location = document.createElement( 'p' );
+      location.textContent = `${city}, ${country}`;
+
+      const tag = document.createElement( 'p' );
+      tag.textContent = tagline;
+
+      const dailyPrice = document.createElement( 'p' );
+      dailyPrice.textContent = `${price}€/jour`;
+
+      linkUser.appendChild(img);
+      linkUser.appendChild(h2);
+      article.appendChild(linkUser);
+
+      article.appendChild(location);
+      article.appendChild(tag);
+      article.appendChild(dailyPrice);
+
+      return (article);
+  }
+
+  function getUserProfilDOM() {
+      const profil = document.createElement( 'div' );
+      profil.className = 'photographer-profile';
+
+      const h1 = document.createElement( 'h1' );
+      h1.textContent = name;
+
+      const location = document.createElement( 'h2' );
+      location.textContent = `${city}, ${country}`;
+      const tag = document.createElement( 'p' );
+      tag.textContent = tagline;
+
+      
+      profil.appendChild(h1);
+      profil.appendChild(location);
+      profil.appendChild(tag);
+      
+      return (profil);
+  }
+
+  function getUserPictureDOM() {
+      const img = document.createElement( 'img' );
+      img.setAttribute("src", picture);
+      img.setAttribute("alt", name);
+      img.setAttribute("loading", "lazy");
+      img.className = 'user';
+      
+      return (img);
   }
   
-  
-  
+  return { getUserCardDOM, getUserProfilDOM, getUserPictureDOM, price }
+}

@@ -1,37 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
     <title>Fisheye - photographe </title>
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html" tabindex="0" aria-label="Fisheye Home page" onkeydown="openlink(event)">
+        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page"/>
+      </a>
     </header>
+
     <main id="main">
-      <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+      <section class="photograph-header">
+        <button class="contact_button" onclick="displayModal()" tabindex="0" aria-haspopup="dialog" aria-label="Contact Me">Contactez-moi</button>
+      </section>
+      
+      <label class="dropdown-label">Trier par</label>
+      <div data-value="popularity" class="dropdown" aria-label="Order By"> 
+        <button onclick="dropdown(event)" tabindex="0" aria-haspopup="listbox" id="dropdownButton">Popularité</button>
+        <img src="assets/icons/arrow.svg" alt="" class="arrow">
+        <ul class="dropdown-options" role="listbox" aria-labelledby="dropdownButton" aria-activedescendant="popularityDropdown">
+          <li onclick="selectDropdownOption(event)" 
+              onkeydown="handleKeyDown(event)?selectDropdownOption(event):undefined" 
+              class="dropdown-hide" 
+              data-value="popularity" 
+              role="option"
+              id="popularityDropdown"
+              aria-selected="true"
+              tabindex="0">Popularité</li>
+          <li onclick="selectDropdownOption(event)" 
+              onkeydown="handleKeyDown(event)?selectDropdownOption(event):undefined" 
+              data-value="date" 
+              role="option"
+              id="dateDropdown"
+              tabindex="0">Date</li>
+          <li onclick="selectDropdownOption(event)" 
+              onkeydown="handleKeyDown(event)?selectDropdownOption(event):undefined" 
+              data-value="title" 
+              role="option"
+              id="titleDropdown"
+              tabindex="0">Titre</li>
+        </ul>
+      </div>
+
+      <section class="photograph-work"></section>
+
+      <div class="likesAndPrice">
+        <span class="totalLikes">
+          <span class="totalLikesNumber"></span>
+          <img src="assets/icons/heart.svg" alt="likes">
+        </span>
+        <span class="pricePerDay">€ / Jour</span>
       </div>
     </main>
-    <div id="contact_modal">
+
+    <div class="lightbox" role="dialog">
+      <p></p>
+      <nav>
+        <img src="assets/icons/lightboxArrow.svg" alt="" tabindex="2" class="previous" aria-label="Previous image" role="link"
+              onclick="lightboxControl(event)" 
+              onkeydown="handleKeyDown(event)?lightboxControl(event):undefined">
+        <img src="assets/icons/lightboxArrow.svg" alt="" tabindex="3" class="next" aria-label="Next image" role="link"
+              onclick="lightboxControl(event)"
+              onkeydown="handleKeyDown(event)?lightboxControl(event):undefined">
+      </nav>
+      <img src="assets/icons/lightboxClose.svg" alt="" tabindex="1" class="close" aria-label="Close dialog" role="button"
+            onclick="lightboxControl(event)"
+            onkeydown="handleKeyDown(event)?lightboxControl(event):undefined">
+    </div>
+
+    <div id="contact_modal" role="dialog" aria-labelledby="contactMe" aria-label="image closeup view">
 			<div class="modal">
 				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <h1 id="contactMe">Contactez-moi</h1>
+          <img src="assets/icons/close.svg" alt="" tabindex="0" role="button"
+          onclick="closeModal()" 
+          onkeydown="handleKeyDown(event)?closeModal():undefined" />
+          <h2></h2>
         </header>
-				<form>
+				<form onsubmit="return sendForm(event)">
 					<div>
-						<label>Prénom</label>
-						<input />
+						<label for="firstName" id="firstNameLabel">Prénom</label>
+						<input type="text" name="firstName" id="firstName" role="textbox" aria-label="First name" aria-labelledby="firstNameLabel" required/>
+						<label for="lastName" id="lastNameLabel">Nom</label>
+						<input type="text" name="lastName" id="lastName" role="textbox" aria-label="Last name" aria-labelledby="lastNameLabel" required/>
+						<label for="email" id="emailLabel">Email</label>
+						<input type="email" name="email" id="email" role="textbox" aria-label="Email" aria-labelledby="emailLabel" required/>
+						<label for="yourMessage" id="yourMessageLabel">Votre message</label>
+						<textarea name="yourMessage" id="yourMessage" role="textbox" aria-label="Your message" aria-labelledby="yourMessageLabel" required></textarea>
 					</div>
-          <button class="contact_button">Envoyer</button>
+          <button class="contact_button" type="submit">Envoyer</button>
 				</form>
 			</div>
 		</div>
-    <script src="./scripts/pages/photographer.js"></script>
-    <script src="./scripts/utils/contactForm.js"></script>
+    
+    <script src="scripts/templates/photographerTemplate.js"></script>
+    <script src="scripts/templates/photographerHeader.js"></script>
+    <script src="scripts/utils/tabindex.js"></script>
+    <script src="scripts/utils/contactForm.js"></script>
+    <script src="scripts/utils/lightbox.js"></script>
+    <script src="scripts/utils/handleKeyDown.js"></script>
+    <script src="scripts/pages/photographer.js"></script>
   </body>
 </html>
