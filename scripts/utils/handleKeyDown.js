@@ -1,3 +1,4 @@
+// gere les event clavier liéé a la touche espace et entrée
 function handleKeyDown(event) {
     switch (event.key) {
         case "Enter":

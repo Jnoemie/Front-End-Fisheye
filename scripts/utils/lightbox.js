@@ -4,13 +4,15 @@ document.addEventListener( 'keydown',
         IsLightboxKeyListenerActive ? handleLightboxKeyDown(event) : undefined;
     }
 );
-
+// selectionne de class photograph-work ... et les renvoyer sous forme de tableau Js 
 function getWorks() {
+    // recherche tout les element a selectionner 
+    //workNodes est une nodelist 
     const worksNodes = document.querySelectorAll(".photograph-work>.thumb-imgfull");
-    // Converti la nodelist en array, le call appelle la nodelist en tant que 'this' dans la méthode et array.prototype défini le type de 'this'
+    // Converti la nodelist en tabelau , le call appelle la nodelist en tant que 'this' dans la méthode et array.prototype défini le type de 'this'
     return Array.prototype.slice.call(worksNodes);
 }
-
+// gere l'ouverture d'une lightboxlorsque l'utilisateur clique sur une image 
 function lightbox(event) {
     const target = event.currentTarget;
     const work = target.parentNode;
@@ -28,7 +30,7 @@ function lightbox(event) {
 
     IsLightboxKeyListenerActive = true;
 }
-
+// prepare et affiche le contenu de la lighthbox en fonction de l'élément selectionné 
 function loadLightbox() {
     const lightbox = document.querySelector(".lightbox");
     const lightboxText = lightbox.querySelector("p");
@@ -39,7 +41,7 @@ function loadLightbox() {
     currentWork.setAttribute("tabindex","4");
     currentWork.removeAttribute("onkeydown");
     currentWork.removeAttribute("aria-haspopup");
-
+// si video ajout de l'attribut "control" pour les commandes de lecture 
     if (currentWork.tagName.toLowerCase() === "video") {
         currentWork.setAttribute("controls","");
     }
@@ -61,7 +63,7 @@ function loadLightbox() {
     lightbox.querySelector(".thumb-img").removeAttribute("onclick");
     lightboxText.textContent = currentText;
 }
-
+//determine quelle action doit etre effectuer en fonction de la classe 
 function lightboxControl(event) {
     switch (event.currentTarget.className) {
         case "next":
@@ -89,7 +91,7 @@ function handleLightboxKeyDown(event) {
             break;
     }
 }
-
+// ecoute les event declancher par le clavier et declenche les actions 
 function nextItem() {
     const lightbox = document.querySelector(".lightbox");
     let lightboxKey = parseInt(lightbox.dataset.key);
@@ -101,7 +103,7 @@ function nextItem() {
         loadLightbox()
     }
 }
-
+// permet de naviguer vers l'élément precedent 
 function previousItem() {
     const lightbox = document.querySelector(".lightbox");
     let lightboxKey = parseInt(lightbox.dataset.key);
@@ -112,7 +114,7 @@ function previousItem() {
         loadLightbox()
     }
 }
-
+// fermeture de la lightbox 
 function closeLightbox( ) {
     const lightbox = document.querySelector(".lightbox");
     const lightboxKey = parseInt(lightbox.dataset.key);

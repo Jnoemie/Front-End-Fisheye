@@ -6,7 +6,7 @@ async function getPhotographers() {
 // Affiche les informations de son profil
 async function displayPhotographerData(photographer) {
     const photographersHeader = document.querySelector(".photograph-header");
-    const contactButton = document.querySelector(".contact_button");
+    //const contactButton = document.querySelector(".contact_button");
     const pricePerDay = document.querySelector(".pricePerDay");
 
 
@@ -33,13 +33,13 @@ async function displayWorkData(medias) {
         photographerWork.appendChild(userWorkDOM);
     });
 }
-
+// reherche du bon photographe avec id 
 function getPhotographerId() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     return params.photographer;
 }
-
+// f
 function like(event) {
     const target = event.currentTarget;
 

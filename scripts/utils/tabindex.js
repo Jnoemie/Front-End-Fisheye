@@ -1,3 +1,5 @@
+//fonction pour basculer l'attribut "tabintex" et la propriete overflow de notre body 
+
 function tabindexSet(value){
     let body = document.querySelector("body");
     const header = document.querySelector("header");

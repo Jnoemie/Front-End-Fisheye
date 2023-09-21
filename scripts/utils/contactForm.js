@@ -6,7 +6,7 @@ document.addEventListener( 'keydown',
         }
     }
 );
-
+// ouverture modal 
 function displayModal() {
     const modal = document.getElementById("contact_modal");
     tabindexSet(-1);
@@ -15,7 +15,7 @@ function displayModal() {
 
     IsFormContactKeyListenerActive = true;
 }
-
+//fermeture modal 
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     tabindexSet(0);
@@ -23,13 +23,13 @@ function closeModal() {
     setTimeout( () => document.querySelector("main .contact_button").focus() , 50);
     IsFormContactKeyListenerActive = false;
 }
-
+// recherche du bon photographe pour mettre son nom
 function getPhotographerId() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     return params.photographer;
 }
-
+//extrait les valeur saisie dans le formulaire 
 function getFormData() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
@@ -40,14 +40,14 @@ function getFormData() {
 
     return data;
 }
-
+//reinitialise les champs du formaulaire 
 function resetFormData() {
     document.getElementById("firstName").value   =
     document.getElementById("lastName").value    =
     document.getElementById("email").value       =
     document.getElementById("yourMessage").value = '';
 }
-
+//empeche l'envoie par defaut du formulaire , recupere les donnée de getFormdata 
 function sendForm(event) {
     event.preventDefault();
 
