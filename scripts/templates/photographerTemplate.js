@@ -1,3 +1,5 @@
+//factory 
+// affiche les information d'un photographe 
 function photographerFactory(data) {
 
   const { name, id, city, country, tagline, price, portrait } = data;
@@ -36,7 +38,7 @@ function photographerFactory(data) {
 
       return (article);
   }
-
+// profil du photographe 
   function getUserProfilDOM() {
       const profil = document.createElement( 'div' );
       profil.className = 'photographer-profile';
@@ -56,7 +58,7 @@ function photographerFactory(data) {
       
       return (profil);
   }
-
+// img du photographe 
   function getUserPictureDOM() {
       const img = document.createElement( 'img' );
       img.setAttribute("src", picture);

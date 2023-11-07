@@ -1,9 +1,11 @@
+//factory 
+// retourne les phots et videéo d'un photographe 
 function photographerWorkFactory(data) {
     
-  const { title, image, video, likes, date, altText } = data;
+  const { title, image, video, likes, date } = data;
   const picture = `assets/images/${image}`;
   const videoMedia = `assets/images/${video}`;
-
+//creer et retourne un element html , representant les photos et video du photographe 
   function getMediaDOM() {
       var media = undefined;
 
@@ -22,20 +24,21 @@ function photographerWorkFactory(data) {
       media.setAttribute("onclick", "lightbox(event)");
       media.setAttribute("onkeydown", "handleKeyDown(event)?lightbox(event):undefined");
       media.setAttribute("aria-haspopup", "dialog");
-      media.setAttribute("aria-label", altText);
+    
+      media.setAttribute("aria-label", title);
       media.setAttribute("tabindex", 0);
       media.dataset.date = date;
       media.className = 'thumb-img';
 
       return media
   }
-
+// génère un element dom represntant le travail d'un photographe 
   function getUserWorkDOM() {
       const figure = document.createElement( 'figure' );
       figure.className = 'thumb-imgfull';
       
       var media = getMediaDOM();
-
+    
       const figcaption = document.createElement( 'figcaption' );
 
       const text = document.createElement( 'h2' );

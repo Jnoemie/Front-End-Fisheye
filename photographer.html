@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" >
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +11,17 @@
   <body>
     <header>
       <a href="index.html" tabindex="0" aria-label="Fisheye Home page" onkeydown="openlink(event)">
-        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page"/>
+        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page">
       </a>
     </header>
 
     <main id="main">
-      <section class="photograph-header">
+      <div class="photograph-header">
         <button class="contact_button" onclick="displayModal()" tabindex="0" aria-haspopup="dialog" aria-label="Contact Me">Contactez-moi</button>
-      </section>
+      </div>
       
       <label class="dropdown-label">Trier par</label>
-      <div data-value="popularity" class="dropdown" aria-label="Order By"> 
+      <div data-value="popularity" class="dropdown" aria-label="Order By" role="navigation"> 
         <button onclick="dropdown(event)" tabindex="0" aria-haspopup="listbox" id="dropdownButton">Popularité</button>
         <img src="assets/icons/arrow.svg" alt="" class="arrow">
         <ul class="dropdown-options" role="listbox" aria-labelledby="dropdownButton" aria-activedescendant="popularityDropdown">
@@ -48,7 +48,7 @@
         </ul>
       </div>
 
-      <section class="photograph-work"></section>
+      <div class="photograph-work"></div>
 
       <div class="likesAndPrice">
         <span class="totalLikes">
@@ -62,14 +62,14 @@
     <div class="lightbox" role="dialog">
       <p></p>
       <nav>
-        <img src="assets/icons/lightboxArrow.svg" alt="" tabindex="2" class="previous" aria-label="Previous image" role="link"
+        <img src="assets/icons/lightboxArrow.svg" alt="" tabindex="2" class="previous" aria-label="Previous image" 
               onclick="lightboxControl(event)" 
               onkeydown="handleKeyDown(event)?lightboxControl(event):undefined">
-        <img src="assets/icons/lightboxArrow.svg" alt="" tabindex="3" class="next" aria-label="Next image" role="link"
+        <img src="assets/icons/lightboxArrow.svg" alt="" tabindex="3" class="next" aria-label="Next image" 
               onclick="lightboxControl(event)"
               onkeydown="handleKeyDown(event)?lightboxControl(event):undefined">
       </nav>
-      <img src="assets/icons/lightboxClose.svg" alt="" tabindex="1" class="close" aria-label="Close dialog" role="button"
+      <img src="assets/icons/lightboxClose.svg" alt="" tabindex="1" class="close" aria-label="Close dialog" 
             onclick="lightboxControl(event)"
             onkeydown="handleKeyDown(event)?lightboxControl(event):undefined">
     </div>
@@ -78,21 +78,21 @@
 			<div class="modal">
 				<header>
           <h1 id="contactMe">Contactez-moi</h1>
-          <img src="assets/icons/close.svg" alt="" tabindex="0" role="button"
+          <img src="assets/icons/close.svg" alt="" tabindex="0"
           onclick="closeModal()" 
-          onkeydown="handleKeyDown(event)?closeModal():undefined" />
-          <h2></h2>
+          onkeydown="handleKeyDown(event)?closeModal():undefined">
+        <h2>""</h2>
         </header>
 				<form onsubmit="return sendForm(event)">
 					<div>
 						<label for="firstName" id="firstNameLabel">Prénom</label>
-						<input type="text" name="firstName" id="firstName" role="textbox" aria-label="First name" aria-labelledby="firstNameLabel" required/>
+						<input type="text" name="firstName" id="firstName"  aria-label="First name" aria-labelledby="firstNameLabel" required>
 						<label for="lastName" id="lastNameLabel">Nom</label>
-						<input type="text" name="lastName" id="lastName" role="textbox" aria-label="Last name" aria-labelledby="lastNameLabel" required/>
+						<input type="text" name="lastName" id="lastName"  aria-label="Last name" aria-labelledby="lastNameLabel" required>
 						<label for="email" id="emailLabel">Email</label>
-						<input type="email" name="email" id="email" role="textbox" aria-label="Email" aria-labelledby="emailLabel" required/>
+						<input type="email" name="email" id="email" aria-label="Email" aria-labelledby="emailLabel" required>
 						<label for="yourMessage" id="yourMessageLabel">Votre message</label>
-						<textarea name="yourMessage" id="yourMessage" role="textbox" aria-label="Your message" aria-labelledby="yourMessageLabel" required></textarea>
+						<textarea name="yourMessage" id="yourMessage"  aria-label="Your message" aria-labelledby="yourMessageLabel" required></textarea>
 					</div>
           <button class="contact_button" type="submit">Envoyer</button>
 				</form>
@@ -100,7 +100,7 @@
 		</div>
     
     <script src="scripts/templates/photographerTemplate.js"></script>
-    <script src="scripts/templates/photographerHeader.js"></script>
+    <script src="scripts/templates/photographerMedia.js"></script>
     <script src="scripts/utils/tabindex.js"></script>
     <script src="scripts/utils/contactForm.js"></script>
     <script src="scripts/utils/lightbox.js"></script>
