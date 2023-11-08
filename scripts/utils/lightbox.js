@@ -1,4 +1,5 @@
 let IsLightboxKeyListenerActive = false;
+//ajout d'un ecouteur global 
 document.addEventListener( 'keydown',
     function (event) {
         IsLightboxKeyListenerActive ? handleLightboxKeyDown(event) : undefined;
@@ -9,10 +10,10 @@ function getWorks() {
     // recherche tout les element a selectionner 
     //workNodes est une nodelist 
     const worksNodes = document.querySelectorAll(".photograph-work>.thumb-imgfull");
-    // Converti la nodelist en tabelau , le call appelle la nodelist en tant que 'this' dans la méthode et array.prototype défini le type de 'this'
+    // Converti la nodelist en tabelau 
     return Array.prototype.slice.call(worksNodes);
 }
-// gere l'ouverture d'une lightboxlorsque l'utilisateur clique sur une image 
+// gere l'ouverture d'une lightbox lorsque l'utilisateur clique sur une image 
 function lightbox(event) {
     const target = event.currentTarget;
     const work = target.parentNode;
@@ -34,23 +35,24 @@ function lightbox(event) {
 function loadLightbox() {
     const lightbox = document.querySelector(".lightbox");
     const lightboxText = lightbox.querySelector("p");
-    const works = getWorks();
-    const currentWorkKey = lightbox.dataset.key;
+    const works = getWorks();// renvoie du tableau contenant les oeuvres
+    const currentWorkKey = lightbox.dataset.key;// recupere de la valeur 
     const currentText = works[currentWorkKey].querySelector("h2").textContent;
-    const currentWork = works[currentWorkKey].querySelector(".thumb-img").cloneNode(true);
-    currentWork.setAttribute("tabindex","4");
+    const currentWork = works[currentWorkKey].querySelector(".thumb-img").cloneNode(true);// clone de l'element 
+    currentWork.setAttribute("tabindex","4");// attribut tabindex 4 au clone 
     currentWork.removeAttribute("onkeydown");
     currentWork.removeAttribute("aria-haspopup");
 // si video ajout de l'attribut "control" pour les commandes de lecture 
-    if (currentWork.tagName.toLowerCase() === "video") {
+    if (currentWork.tagName.toLowerCase() === "video") {// si video affichage des commandes
         currentWork.setAttribute("controls","");
     }
 
-    if (currentWorkKey < 1) {
-        lightbox.querySelector(".previous").setAttribute("disabled","")
-    } else if (currentWorkKey > works.length - 2) {
-        lightbox.querySelector(".next").setAttribute("disabled","")
+    if (currentWorkKey < 1) {// verification si l'oeuvre et la premiere
+        lightbox.querySelector(".previous").setAttribute("disabled","")// desactive precedent
+    } else if (currentWorkKey > works.length - 2) {// si l'oeuvre est la derniere 
+        lightbox.querySelector(".next").setAttribute("disabled","")//desactive le bouton next 
     } else {
+        // reactive bouton 
         lightbox.querySelector(".previous").removeAttribute("disabled")
         lightbox.querySelector(".next").removeAttribute("disabled")
     }
@@ -60,8 +62,8 @@ function loadLightbox() {
     }
 
     lightbox.insertBefore(currentWork, lightboxText);
-    lightbox.querySelector(".thumb-img").removeAttribute("onclick");
-    lightboxText.textContent = currentText;
+    lightbox.querySelector(".thumb-img").removeAttribute("onclick");// suppression de l'attribut onclick 
+    lightboxText.textContent = currentText;//met a jour le texte de l'ouevre actuel 
 }
 //determine quelle action doit etre effectuer en fonction de la classe 
 function lightboxControl(event) {
@@ -77,7 +79,7 @@ function lightboxControl(event) {
             break;
     }
 }
-
+//gere les touche du clavier 
 function handleLightboxKeyDown(event) {
     switch (event.key) {
         case "ArrowLeft":

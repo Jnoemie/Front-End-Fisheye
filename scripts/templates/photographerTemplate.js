@@ -1,10 +1,10 @@
 //factory 
-// affiche les information d'un photographe 
+// affichage d'un photographe 
 function photographerFactory(data) {
 
   const { name, id, city, country, tagline, price, portrait } = data;
   const picture = `assets/photographers/${portrait}`;
-
+// carte de visite du phototgraphe 
   function getUserCardDOM() {
       const article = document.createElement( 'article' );
       article.className = 'thumb-photographer';

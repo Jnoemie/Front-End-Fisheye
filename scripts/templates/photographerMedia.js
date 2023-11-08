@@ -38,7 +38,7 @@ function photographerWorkFactory(data) {
       figure.className = 'thumb-imgfull';
       
       var media = getMediaDOM();
-    
+    //creation d'une figcaption pour le titre les likes 
       const figcaption = document.createElement( 'figcaption' );
 
       const text = document.createElement( 'h2' );

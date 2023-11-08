@@ -1,12 +1,10 @@
 async function getPhotographers() {
-    return fetch('data/photographers.json')
-        .then(response => response.json());
+    return await fetch('./data/photographers.json').then((response) => response.json());
 }
 
 // Affiche les informations de son profil
 async function displayPhotographerData(photographer) {
     const photographersHeader = document.querySelector(".photograph-header");
-    //const contactButton = document.querySelector(".contact_button");
     const pricePerDay = document.querySelector(".pricePerDay");
 
 
@@ -26,11 +24,11 @@ async function displayWorkData(medias) {
     const photographerWork = document.querySelector(".photograph-work");
     
     const works = medias.filter( media => media.photographerId == getPhotographerId() )
-
+//boucle foreach dans le tableau works
     works.forEach((media) => {
         const photographerWorkModel = photographerWorkFactory(media);
-        const userWorkDOM = photographerWorkModel.getUserWorkDOM();
-        photographerWork.appendChild(userWorkDOM);
+        const userWorkDOM = photographerWorkModel.getUserWorkDOM();//creer un element dom pour l'oeuvre du photographe
+        photographerWork.appendChild(userWorkDOM);// ajoute le dom créé comme enfant de l'element 
     });
 }
 // reherche du bon photographe avec id 
@@ -39,7 +37,7 @@ function getPhotographerId() {
     const params = Object.fromEntries(urlSearchParams.entries());
     return params.photographer;
 }
-// f
+// gére l'événement "like" sur une seule oeuvre ,si elle n'est pas déjà likée , elle change le nombre total de like 
 function like(event) {
     const target = event.currentTarget;
 
@@ -49,7 +47,7 @@ function like(event) {
         updateTotalLikes();
     }
 }
-
+// calcule et affiche le nombre total de likes pour la page 
 async function updateTotalLikes() {
     const pictures = document.querySelector(".photograph-work");
     const likes = pictures.querySelectorAll(".number-likes");
@@ -60,20 +58,21 @@ async function updateTotalLikes() {
 
     totalLikesNumber.textContent = totalLikes;
 }
-
+//gére le tri 
 function dropdown(event) {
-    const button = event.currentTarget;
+    const button = event.currentTarget;//stock la référence du DOM qui déclenche l'événement 
     const dropdown = button.parentNode;
-    dropdown.classList.toggle('dropdown-open');
+    dropdown.classList.toggle('dropdown-open');//Alterne la classe 'dropdown-open' sur dropdown
+    // si dropdown a deja dropdown-open "retiré ou ajouté "( cache ou montre les filtres)
     if (dropdown.classList.contains('dropdown-open')) {
-        button.setAttribute('aria-expanded', true);
+        button.setAttribute('aria-expanded', true);//menu ouvert
     } else {
-        button.setAttribute('aria-expanded', false);
+        button.setAttribute('aria-expanded', false);//menu fermé
     }
     
-    setTimeout( () => button.focus() , 50);
+    setTimeout( () => button.focus() , 50);//retarde l'excution //permet de maintenir l'accessibilité 
 }
-
+//sélestion d'une option // met a jour l'interface 
 function selectDropdownOption(event) {
     const target = event.currentTarget;
     const option = target.dataset.value;
@@ -81,16 +80,19 @@ function selectDropdownOption(event) {
     const dropdown = target.parentNode.parentNode;
     const button = dropdown.querySelector("button");
 
+    
     const currentDropdown = dropdown.querySelectorAll(".dropdown-hide");
+    // boucle parcourant la classe dropdown-hide
     for (let i = 0; i < currentDropdown.length; i++) {
-        currentDropdown[i].classList.remove("dropdown-hide");
-        currentDropdown[i].setAttribute("aria-selected","false");
+        currentDropdown[i].classList.remove("dropdown-hide");// enleve la classe 
+        currentDropdown[i].setAttribute("aria-selected","false");// indique que l'élément n'est pas selectionné
     }
     
-    target.classList.add("dropdown-hide");
-    target.setAttribute("aria-selected","true");
-
+    target.classList.add("dropdown-hide");// ajoute la classe
+    target.setAttribute("aria-selected","true");//selectionné
+//mise a jour 
     dropdown.dataset.value = option;
+    //texte mis a jour selon l'option selectionné 
     dropdown.querySelector('button').textContent = dropdown.querySelector(`[data-value=${option}]`).textContent;
 
     dropdown.classList.toggle('dropdown-open');
@@ -99,18 +101,18 @@ function selectDropdownOption(event) {
     } else {
         button.setAttribute('aria-expanded', false);
     }
-    dropdownList.setAttribute("aria-activedescendant",target.id);
+    dropdownList.setAttribute("aria-activedescendant",target.id);// permet au technologie d'assistance d'identifier l'option active 
 
     orderWork();
     setTimeout( () => dropdown.querySelector('button').focus() , 50);
     
 }
-
+// réordonne les oeuvres selon les l'option selectionner 
 function orderWork() {
     const photographWork = document.querySelector(".photograph-work");
     let contentNodes = document.querySelectorAll('.thumb-imgfull');
-    const order = document.querySelector(".dropdown").dataset.value;
-    // Converti la nodelist en array, le call appelle la nodelist en tant que 'this' dans la méthode et array.prototype défini le type de 'this'
+    const order = document.querySelector(".dropdown").dataset.value;//valeur de l'attribut
+    // convertit en tableau
     let content = Array.prototype.slice.call(contentNodes);
     
     switch (order) {
@@ -148,8 +150,8 @@ function orderWork() {
             break;
     }
 
-    photographWork.innerHTML = "";
-    content.forEach(item => photographWork.appendChild(item));
+    photographWork.innerHTML = "";// efface  le contenu de photographWork
+    content.forEach(item => photographWork.appendChild(item));//Ajout du tableau trier 
 }
 
 async function init() {

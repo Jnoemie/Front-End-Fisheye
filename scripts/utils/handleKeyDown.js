@@ -1,4 +1,5 @@
-// gere les event clavier liéé a la touche espace et entrée
+// gere les event clavier liéé a les touches espace et entrée
+// empeche les comportement par defaut 
 function handleKeyDown(event) {
     switch (event.key) {
         case "Enter":
@@ -13,10 +14,10 @@ function handleKeyDown(event) {
             break;
     }
 }
-
+// pour gerer la touche espace 
 function openlink(event) {
     if (event.key === " ") {
         event.preventDefault();
-        window.open(event.currentTarget.href,'_self');
+        window.open(event.currentTarget.href,'_self');// simule un clic sur un lien 
     }
 }

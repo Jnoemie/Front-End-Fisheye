@@ -4,6 +4,7 @@ function tabindexSet(value){
     let body = document.querySelector("body");
     const header = document.querySelector("header");
     const main = document.querySelector("main");
+    //creation d'un tableau 
     const tabs = [ ...main.querySelectorAll("[tabindex]") , ...header.querySelectorAll("[tabindex]") ];
 
     if ( body.style.overflow === 'hidden' ) { 
